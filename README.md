@@ -1,5 +1,5 @@
 # virt_context.nvim
 
-Showing treesitter context using virtual lines.
+Display treesitter context by using virtual text.
 
-Warning: Don't use it right now, current state is super annoying.
+End of line is working, top is not.
