@@ -30,11 +30,19 @@ M.update_context_top = function()
 	if context ~= nil then
 		local win = vim.api.nvim_get_current_win()
 		local cursor = vim.api.nvim_win_get_cursor(win)
+		if cursor[1] == last_cursor_postion[1] then
+			return
+		else
+			last_cursor_postion = cursor
+		end
 		if id ~= nil then
-			vim.api.nvim_buf_del_extmark(0, ns_id, id)
+			vim.api.nvim_buf_clear_namespace(0, ns_id, 0, -1)
 		end
 
-		id = vim.api.nvim_buf_set_extmark(0, ns_id, cursor[1], 0, {
+		local info = vim.fn.getwininfo(win)
+		local topline = info[1]["topline"]
+
+		id = vim.api.nvim_buf_set_extmark(0, ns_id, topline - 1, 0, {
 			virt_lines = { { { context, "Comment" } } },
 			virt_lines_above = true,
 			virt_lines_leftcol = true,
